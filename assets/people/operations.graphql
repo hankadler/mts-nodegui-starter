@@ -1,0 +1,63 @@
+query GetPeople {
+  people {
+    _id
+    name
+    birthDate
+  }
+}
+
+query GetPerson($personId: ID!) {
+  person(personId: $personId) {
+    _id
+    name
+    birthDate
+  }
+}
+
+mutation CreatePerson($createPersonInput: CreatePersonInput!) {
+  createPerson(createPersonInput: $createPersonInput) {
+    success
+    message
+    person {
+      _id
+      name
+      birthDate
+    }
+  }
+}
+
+mutation UpdatePerson($personId: ID!, $updatePersonInput: UpdatePersonInput!) {
+  updatePerson(personId: $personId, updatePersonInput: $updatePersonInput) {
+    success
+    message
+    person {
+      _id
+      name
+      birthDate
+    }
+  }
+}
+
+mutation DeletePeople {
+  deletePeople {
+    success
+    message
+    person {
+      _id
+      name
+      birthDate
+    }
+  }
+}
+
+mutation DeletePerson($personId: ID!) {
+  deletePerson(personId: $personId) {
+    success
+    message
+    person {
+      _id
+      name
+      birthDate
+    }
+  }
+}

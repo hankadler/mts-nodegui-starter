@@ -1,0 +1,19 @@
+# exclude
+*
+
+# include
+!assets
+!assets/**
+!scripts
+!scripts/**
+!src
+!src/**
+!.gitignore
+!.eslintrc.json
+!.graphqlconfig
+!nodemon.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!README.md
+!config.ts

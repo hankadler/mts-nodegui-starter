@@ -1,0 +1,6 @@
+{
+  "quiet": true,
+  "watch": ["src"],
+  "ext": "ts",
+  "exec": "npm run dev"
+}

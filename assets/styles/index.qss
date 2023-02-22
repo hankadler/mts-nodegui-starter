@@ -1,0 +1,26 @@
+* {
+  font: 8pt;
+}
+
+QMenuBar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+QGroupBox {
+  font-weight: bold;
+}
+
+QLineEdit {
+  margin: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+QScrollArea {
+  border: none;
+}
+
+QStatusBar {
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
