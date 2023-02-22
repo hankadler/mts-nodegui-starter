@@ -1,9 +1,9 @@
 import { Direction, QBoxLayout, QStackedWidget, QWidget } from "@nodegui/nodegui";
-import { events } from "../globals";
+import { events } from "../store";
 import NavWidget from "./NavWidget";
 import ColorSwitcherWidget from "./ColorSwitcherWidget";
 import ColorWidget from "./ColorWidget";
-import PeopleWidget from "./PeopleWidget";
+import PeopleWidget from "../../people/view";
 
 export default class CentralWidget extends QWidget {
   private widgets = {

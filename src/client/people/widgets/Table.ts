@@ -1,17 +1,11 @@
-import { Direction,
-  QBoxLayout,
-  QCheckBox,
-  QGridLayout,
-  QLabel,
-  QStackedWidget,
-  QWidget,
-  WidgetEventTypes } from "@nodegui/nodegui";
-import { events, store } from "../globals";
-import { getPeople } from "../controllers/peopleController";
-import PeopleRow from "./PeopleRow";
-import { Person } from "../../schema/Person/types";
+import { Direction, QBoxLayout, QCheckBox, QGridLayout, QLabel, QStackedWidget, QWidget, WidgetEventTypes } from "@nodegui/nodegui";
+import { events } from "../../app/store";
+import { getPeople } from "../controller";
+import Row from "./Row";
+import { Person } from "../../../schema/Person/types";
+import { checkedIds, people } from "../store";
 
-export default class PeopleTable extends QWidget {
+export default class Table extends QWidget {
   private state = {
     painted: false
   };
@@ -22,7 +16,7 @@ export default class PeopleTable extends QWidget {
     personLabel: new QLabel(),
     birthDateLabel: new QLabel(),
     tableWidget: new QWidget(),
-    peopleRows: [] as PeopleRow[],
+    peopleRows: new Set<Row>(),
     stackedWidget: new QStackedWidget()
   };
 
@@ -36,25 +30,26 @@ export default class PeopleTable extends QWidget {
     onShow: async () => {
       if (!this.state.painted) return;
 
-      console.log("PeopleTable::onShow()");
+      // console.debug("people/table/onShow");
 
       const { allCheckBox, stackedWidget, tableWidget, peopleRows } = this.widgets;
       const { tableLayout } = this.layouts;
 
-      peopleRows.forEach((peopleRow) => peopleRow.close()); // !!!
-      store.people = await getPeople();
-
-      console.log(store.people.map(({ name }) => name));
-
+      people.clear();
+      peopleRows.forEach((peopleRow) => peopleRow.delete());
+      peopleRows.clear();
       allCheckBox.setChecked(false);
+      checkedIds.clear();
+      (await getPeople()).map((person) => people.add(person));
 
-      if (store.people.length === 0) {
+      // console.debug(Array.from(people));
+
+      if (people.size === 0) {
         stackedWidget.setCurrentIndex(0);
       } else {
         tableWidget.hide();
-        peopleRows.length = 0;
-        store.people.forEach(({ _id, name, birthDate }, row) => {
-          peopleRows.push(new PeopleRow(_id, name, birthDate, tableLayout, row + 1));
+        Array.from(people).forEach(({ _id, name, birthDate }, row) => {
+          peopleRows.add(new Row(_id, name, birthDate, tableLayout, row + 1));
         });
         tableWidget.show();
         stackedWidget.setCurrentIndex(1);
@@ -62,11 +57,7 @@ export default class PeopleTable extends QWidget {
     },
 
     onCreatePerson: async (person: Person) => {
-      store.people.push(person);
-      // const { peopleRows } = this.widgets;
-      // const { _id, name, birthDate } = person;
-      // const row = store.people.length + 1;
-      // peopleRows.push(new PeopleRow(_id, name, birthDate, this.layouts.tableLayout, row));
+      people.add(person);
       await this.handlers.onShow();
     },
 

@@ -1,5 +1,5 @@
 import { Direction, QBoxLayout, QPushButton, QWidget } from "@nodegui/nodegui";
-import { events } from "../globals";
+import { events } from "../store";
 
 export default class NavWidget extends QWidget {
   private widgets = {

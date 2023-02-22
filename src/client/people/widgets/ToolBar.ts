@@ -1,15 +1,14 @@
 import { QGridLayout, QPushButton, QWidget } from "@nodegui/nodegui";
-import { Promise } from "mongoose";
-import { events } from "../globals";
-import PeopleContext from "../contexts/PeopleContext";
-import { deletePerson } from "../controllers/peopleController";
-import PeopleAddDialog from "./PeopleAddDialog";
+import { events } from "../../app/store";
+import { checkedIds } from "../store";
+import { deletePerson } from "../controller";
+import AddDialog from "./AddDialog";
 
-export default class PeopleToolBar extends QWidget {
+export default class ToolBar extends QWidget {
   private widgets = {
     addButton: new QPushButton(),
     deleteButton: new QPushButton(),
-    addDialog: new PeopleAddDialog()
+    addDialog: new AddDialog()
   };
 
   private handlers = {
@@ -18,17 +17,14 @@ export default class PeopleToolBar extends QWidget {
     },
 
     onClickDelete: async () => {
-      await Promise.all(
-        Array.from(PeopleContext.checkedIds).map((personId) => deletePerson(personId))
-      );
-      PeopleContext.checkedIds.clear();
-      console.log(PeopleContext.checkedIds);
+      await Promise.all(Array.from(checkedIds).map((personId) => deletePerson(personId)));
+      checkedIds.clear();
       events.emit("toggledAll", false);
       events.emit("refreshPeople");
     },
 
     onEnableOrDisableDeleteButton: async () => {
-      this.widgets.deleteButton.setDisabled(PeopleContext.checkedIds.size === 0);
+      this.widgets.deleteButton.setDisabled(checkedIds.size === 0);
     }
   };
 

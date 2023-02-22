@@ -1,6 +1,6 @@
 import { AlignmentFlag, Direction, QBoxLayout, QDialog, QGridLayout, QIcon, QLabel, QWidget, WindowType } from "@nodegui/nodegui";
-import { APP } from "../../../config";
-import { createPixmap } from "../helpers";
+import { APP } from "../../../../config";
+import { createPixmap } from "../../utils";
 
 const caduceusSmallPixmap = createPixmap("caduceus-32x32.png");
 const caduceusLargePixmap = createPixmap("caduceus-256x256.png");

@@ -1,6 +1,6 @@
 import path from "path";
 import { ROOT_PATH } from "../../../config";
-import { fetchGraphQL, parseOperations } from "../helpers";
+import { fetchGraphQL, parseOperations } from "../utils";
 import { CreatePersonInput, Person, UpdatePersonInput } from "../../schema/Person/types";
 
 const {

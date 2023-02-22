@@ -1,15 +1,9 @@
-import { QDate,
-  QDateEdit,
-  QDialog,
-  QGridLayout,
-  QLabel,
-  QLineEdit,
-  QPushButton } from "@nodegui/nodegui";
-import { CreatePersonInput } from "../../schema/Person/types";
-import { createPerson } from "../controllers/peopleController";
-import { events } from "../globals";
+import { QDate, QDateEdit, QDialog, QGridLayout, QLabel, QLineEdit, QPushButton } from "@nodegui/nodegui";
+import { CreatePersonInput } from "../../../schema/Person/types";
+import { createPerson } from "../controller";
+import { events } from "../../app/store";
 
-export default class PeopleAddDialog extends QDialog {
+export default class AddDialog extends QDialog {
   private widgets = {
     nameLabel: new QLabel(),
     nameEdit: new QLineEdit(),
@@ -74,6 +68,7 @@ export default class PeopleAddDialog extends QDialog {
     rootLayout.addWidget(okButton, 4, 0);
     rootLayout.addWidget(cancelButton, 4, 1);
 
+    this.setWindowTitle("Add Person");
     this.setLayout(rootLayout);
   }
 }

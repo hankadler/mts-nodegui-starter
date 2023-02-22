@@ -1,11 +1,11 @@
 import { Direction, QBoxLayout, QWidget } from "@nodegui/nodegui";
-import PeopleTable from "./PeopleTable";
-import PeopleToolBar from "./PeopleToolBar";
+import Table from "./widgets/Table";
+import ToolBar from "./widgets/ToolBar";
 
 export default class PeopleWidget extends QWidget {
   private widgets = {
-    peopleToolBar: new PeopleToolBar(),
-    peopleTable: new PeopleTable()
+    peopleToolBar: new ToolBar(),
+    peopleTable: new Table()
   };
 
   private layouts = {

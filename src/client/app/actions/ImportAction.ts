@@ -1,5 +1,5 @@
 import { QAction, QMenu } from "@nodegui/nodegui";
-import { execFileDialog } from "../helpers";
+import { execFileDialog } from "../../utils";
 
 export default class ImportAction extends QAction {
   public constructor() {

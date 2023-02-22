@@ -1,9 +1,7 @@
-import { windows } from "./globals";
+import { windows } from "./app/store";
 
 const start = async () => {
   windows.main.show();
 };
 
-export default {
-  start
-};
+export default { start };

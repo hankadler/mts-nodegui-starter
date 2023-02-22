@@ -1,7 +1,7 @@
 import { QIcon, QMainWindow, QStatusBar } from "@nodegui/nodegui";
-import { createPixmap, loadStyle } from "../helpers";
-import MenuBar from "./MenuBar";
-import CentralWidget from "./CentralWidget";
+import { createPixmap, loadStyle } from "../utils";
+import MenuBar from "./widgets/MenuBar";
+import CentralWidget from "./widgets/CentralWidget";
 
 const faviconPixmap = createPixmap("favicon.png");
 

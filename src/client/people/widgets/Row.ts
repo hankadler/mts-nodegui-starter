@@ -1,8 +1,8 @@
 import { QCheckBox, QGridLayout, QLineEdit, QWidget } from "@nodegui/nodegui";
-import PeopleContext from "../contexts/PeopleContext";
-import { events } from "../globals";
+import { checkedIds } from "../store";
+import { events } from "../../app/store";
 
-export default class PeopleRow extends QWidget {
+export default class Row extends QWidget {
   private widgets = {
     checkBox: new QCheckBox(),
     nameEdit: new QLineEdit(),
@@ -11,14 +11,9 @@ export default class PeopleRow extends QWidget {
 
   private handlers = {
     onToggle: async (checked: boolean, _id: string) => {
-      PeopleContext.checkedIds.delete(_id);
-      if (checked) {
-        PeopleContext.checkedIds.add(_id);
-      }
-      console.log({
-        checked,
-        ids: PeopleContext.checkedIds
-      });
+      checkedIds.delete(_id);
+      if (checked) checkedIds.add(_id);
+      console.log({ checked, ids: checkedIds });
       events.emit("enableOrDisablePeopleDeleteButton");
     },
 
@@ -37,7 +32,6 @@ export default class PeopleRow extends QWidget {
     super();
 
     const { checkBox, nameEdit, birthDateEdit } = this.widgets;
-
     const { onToggle, onToggleAll } = this.handlers;
 
     checkBox.addEventListener("toggled", async (checked) => onToggle(checked, _id));
@@ -54,8 +48,9 @@ export default class PeopleRow extends QWidget {
     tableLayout.addWidget(birthDateEdit, row, 2);
   }
 
-  public close(): boolean {
-    Object.values(this.widgets).forEach((widget) => widget.close());
-    return super.close();
+  public delete() {
+    events.removeListener("toggledAll", this.handlers.onToggleAll);
+    Object.values(this.widgets).forEach((widget) => widget.delete());
+    super.delete();
   }
 }
